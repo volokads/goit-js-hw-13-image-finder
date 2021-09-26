@@ -11,24 +11,6 @@ body {
   border-top: 1px solid #ddd;
 }
 
-/* .articles {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-gap: 20px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  max-width: calc(100vw - 80px);
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 30px;
-} */
-
-/* .articles li {
-  height: 450px;
-  overflow: hidden;
-} */
-
 .photo-card__img {
   display: block;
   width: 100%;
@@ -51,5 +33,11 @@ body {
   margin: 10px;
   padding: 0;
   width: 320px;
-//   height: 280px;
+}
+.stats{
+    display: flex;
+    justify-content: space-between;
+}
+.material-icons{
+    font-size: 15px;
 }

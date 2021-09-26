@@ -15,7 +15,7 @@ button.addEventListener('click', () => {
     //   top: document.documentElement.scrollHeight,
     //   behavior: 'smooth',
     // });
-    button.scrollIntoView({
+    form.scrollIntoView({
   behavior: 'smooth',
   block: 'end',
 });
@@ -25,17 +25,12 @@ form.addEventListener('submit', (event) => {
     event.preventDefault()
     const form = event.currentTarget
     imageServise.imageName = form.elements.query.value
-    // fetchImages(imageName)
     console.log(imageServise);
     imageServise.fetchImages().then(({ hits }) => {
         list.insertAdjacentHTML('beforeend', item(hits))
     })
-    // window.scrollTo({
-    //   top: document.documentElement.scrollHeight,
-    //   behavior: 'smooth',
-    // });
-    // console.log(document.documentElement.scrollHeight);
-    button.scrollIntoView({
+    
+    list.scrollIntoView({
   behavior: 'smooth',
   block: 'end',
 });
