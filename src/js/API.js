@@ -1,40 +1,52 @@
 import item from '../tamplates/item.hbs'
 import imageServise from './apiServise.js'
-const list = document.getElementById('list')
-const button = document.querySelector('[type="button"]')
-const form = document.getElementById('search-form')
-console.log(imageServise);
+import refs from './refs.js'
 
-button.addEventListener('click', () => {
-    imageServise.page += 1
-    console.log();
-    imageServise.fetchImages().then(({ hits }) => {
-        list.insertAdjacentHTML('beforeend', item(hits))
-    })
-    // window.scrollTo({
-    //   top: document.documentElement.scrollHeight,
-    //   behavior: 'smooth',
-    // });
-    form.scrollIntoView({
-  behavior: 'smooth',
-  block: 'end',
-});
+import '@pnotify/core/dist/BrightTheme.css';
+import { error } from '@pnotify/core';
+import '@pnotify/core/dist/PNotify.css';
 
-})
-form.addEventListener('submit', (event) => {
-    event.preventDefault()
-    const form = event.currentTarget
-    imageServise.imageName = form.elements.query.value
-    console.log(imageServise);
-    imageServise.fetchImages().then(({ hits }) => {
-        list.insertAdjacentHTML('beforeend', item(hits))
-    })
-    
-    list.scrollIntoView({
-  behavior: 'smooth',
-  block: 'end',
-});
+const {list, button , form } = refs
 
-})
-// 16190641-6f6d4120eafc733567c1d4bc7
-const element = document.getElementById('.my-element-selector');
+
+form.addEventListener('submit', formSearch)
+button.addEventListener('click', btnLoadMore)
+
+function formSearch(event) {
+  event.preventDefault()
+  imageServise.imageName = event.currentTarget.elements.query.value
+  if (event.currentTarget.elements.query.value === '' ||
+  event.currentTarget.elements.query.value.length < 2
+  ) {
+    return error({ text: "Please specify your request", delay: 1500})
+  }
+  resetPage()
+  imageServise.fetchImages().then(({ hits }) => {
+    clearList()
+    list.insertAdjacentHTML('beforeend', item(hits))
+  })
+  button.classList.add('visible')
+}
+
+
+function btnLoadMore() {
+  pageIncrease()
+  imageServise.fetchImages().then(({ hits }) => {
+    list.insertAdjacentHTML('beforeend', item(hits))
+  }).then(() => 
+  button.scrollIntoView({
+    block: 'end',
+    behavior: 'smooth',
+  }))
+}
+
+const pageIncrease = () => {
+  imageServise.page += 1
+}
+const resetPage = () => {
+  imageServise.page = 1
+}
+const clearList = () => {
+  list.innerHTML = ''
+}
+
